@@ -1,6 +1,6 @@
 # Automated Time Series Modelling for Count Data
 
-Welcome to the official repository for the research and development from my Master's dissertation in Computational Engineering, **"Automatic Order Selection in Models for Time Series of Counts"**. This project was born out of a persistent challenge in time series analysis: the complex and often subjective task of selecting the correct model orders for count data.
+Welcome to the official repository for the research and development from my Master's dissertation in Computational Engineering, **"Automatic Order Selection in Models for Time Series of Counts"**. This project was born out of a challenge in time series analysis: the complex and often subjective task of selecting the correct model orders for count data.
 
 ## 📜 The Problem & The Solution
 
@@ -39,7 +39,7 @@ Here is how you can apply the function to your data.
 stepwise_model <- auto.ingarch(
   y = my_counts,
   xreg = my_covariates,
-  distr = "negbin", # Recommended for overdispersed counts
+  distr = "nbinom", # Recommended for overdispersed counts
   link = "log",     # Recommended for flexibility
   stepwise = TRUE   # This is the default
 )
@@ -54,7 +54,7 @@ print(stepwise_model)
 grid_search_model <- auto.ingarch(
   y = my_counts,
   xreg = my_covariates,
-  distr = "negbin",
+  distr = "nbinom",
   link = "log",
   stepwise = FALSE # This triggers the grid search
 )
