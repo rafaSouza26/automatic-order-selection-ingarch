@@ -1,66 +1,34 @@
-# automatic-order-selection-ingarch
-Automated Time Series Modelling for Count Data
-Welcome to the official repository for the research and development from my Master's dissertation in Computational Engineering, 
+# Automated Time Series Modelling for Count Data
 
-"Automatic Order Selection in Models for Time Series of Counts". This project was born out of a persistent challenge in time series analysis: the complex and often subjective task of selecting the correct model orders for count data.
+Welcome to the official repository for the research and development from my Master's dissertation in Computational Engineering, **"Automatic Order Selection in Models for Time Series of Counts"**. This project was born out of a persistent challenge in time series analysis: the complex and often subjective task of selecting the correct model orders for count data.
 
-📜 The Problem & The Solution
-Traditional time series modeling, especially for count data using 
+## 📜 The Problem & The Solution
 
-Integer-valued Generalised Autoregressive Conditional Heteroskedasticity (INGARCH) models, requires significant manual effort and expertise. The process is often laborious, relying on trial-and-error and diagnostic interpretation.
+Traditional time series modeling, especially for count data using **Integer-valued Generalised Autoregressive Conditional Heteroskedasticity (INGARCH)** models, requires significant manual effort and expertise. The process is often laborious, relying on trial-and-error and diagnostic interpretation.
 
+Inspired by the success of the `auto.arima()` function for ARIMA models, this dissertation introduces the **'Automated Count Time Series' (ACTS) algorithm**. The algorithm is delivered as a powerful and user-friendly R function: `auto.ingarch()`.
 
+The `auto.ingarch()` function automates the entire order selection process for INGARCH models, systematically finding the optimal `p` and `q` orders by adapting the core principles of the celebrated Hyndman-Khandakar algorithm.
 
-Inspired by the success of the 
+## 🚀 How to Use `auto.ingarch`
 
-auto.arima() function for ARIMA models, this dissertation introduces the 
+The `auto.ingarch()` function is designed to be intuitive. It takes your count time series data and automatically finds the best INGARCH(p,q) model based on a chosen information criterion (like AIC).
 
-'Automated Count Time Series' (ACTS) algorithm. The algorithm is delivered as a powerful and user-friendly R function: 
+### Main Arguments
 
-auto.ingarch().
+* `y`: Your time series object (must be a vector or `ts` object of non-negative integers).
+* `xreg` (optional): A matrix of external regressor variables.
+* `stepwise` (optional): A boolean flag to determine the search strategy.
+    * `TRUE` (default): Uses an efficient **stepwise search** that intelligently navigates the model space to find a locally optimal model quickly.
+    * `FALSE`: Performs an exhaustive **grid search**, testing every possible (p,q) combination within the specified limits. This is more computationally intensive but guarantees finding the globally optimal model within the search space.
+* `distr` (optional): The conditional distribution for the model. Defaults to `"poisson"`, but `"negbin"` (Negative Binomial) is recommended to handle overdispersed data.
+* `link` (optional): The link function for the model. Defaults to `"identity"`, but `"log"` is recommended for flexibility as it ensures the conditional mean remains positive without constraining coefficient signs.
 
+### Example Usage
 
-The 
-
-auto.ingarch() function automates the entire order selection process for INGARCH models, systematically finding the optimal p and q orders by adapting the core principles of the celebrated Hyndman-Khandakar algorithm.
-
-
-🚀 How to Use auto.ingarch
-The auto.ingarch() function is designed to be intuitive. It takes your count time series data and automatically finds the best INGARCH(p,q) model based on a chosen information criterion (like AIC).
-
-Main Arguments
-
-y: Your time series object (must be a vector or ts object of non-negative integers).
-
-
-xreg (optional): A matrix of external regressor variables.
-
-stepwise (optional): A boolean flag to determine the search strategy.
-
-
-TRUE (default): Uses an efficient stepwise search that intelligently navigates the model space to find a locally optimal model quickly.
-
-
-FALSE: Performs an exhaustive grid search, testing every possible (p,q) combination within the specified limits. This is more computationally intensive but guarantees finding the globally optimal model within the search space.
-
-
-distr (optional): The conditional distribution for the model. Defaults to 
-
-"poisson", but "negbin" (Negative Binomial) is recommended to handle overdispersed data.
-
-
-
-link (optional): The link function for the model. Defaults to 
-
-"identity", but "log" is recommended for flexibility as it ensures the conditional mean remains positive without constraining coefficient signs.
-
-
-
-Example Usage
 Here is how you can apply the function to your data.
 
-R
-
+```R
 # Assume 'my_counts' is your time series of counts
 # and 'my_covariates' is a matrix of your external variables.
 
@@ -93,11 +61,3 @@ grid_search_model <- auto.ingarch(
 
 # Print the results
 print(grid_search_model)
-🎯 Key Contributions of This Work
-This dissertation and the resulting code provide two main contributions to the time series community:
-
-
-A Fully Functional Automated Tool (auto.ingarch): A robust and extensively tested R function that brings the power of automated model selection to the INGARCH framework, saving researchers time and improving the reproducibility of their results.
-
-
-A Detailed Explanation of the Hyndman-Khandakar Algorithm: The research provides one of the most in-depth explanations available of the inner workings of the famous auto.arima() algorithm, filling a notable gap in existing literature and serving as a valuable resource for students and practitioners.
